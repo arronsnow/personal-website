@@ -1,69 +1,55 @@
-# React + TypeScript + Vite
+# Personal Website
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, fast, and minimal personal website built with **React 19**, **TypeScript**, **Vite 7**, **Tailwind CSS 4**, and enhanced with **Framer Motion** animations and **Lucide** iconography.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Tech Stack
 
-## Expanding the ESLint configuration
+| Layer        | Tools / Libraries |
+|--------------|------------------|
+| Framework    | React 19 (with React DOM) |
+| Build Tool   | Vite 7 |
+| Language     | TypeScript |
+| Styling      | Tailwind CSS 4, PostCSS, Autoprefixer |
+| Animation    | Framer Motion |
+| Icons        | Lucide React |
+| Tooling      | ESLint (typescript-eslint, react hooks & refresh plugins) |
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+# Getting Started
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+### 1. Prerequisites
+- Node.js 18+ (recommend LTS)
+- pnpm / npm / yarn (choose one; examples use `npm`)
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### 2. Install Dependencies
+```bash
+npm install
+# or
+pnpm install
+# or
+yarn
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### 3. Run in Development
+```bash
+npm run dev
 ```
+Visit: http://localhost:5173 (or the port Vite prints)
+
+### 4. Production Build
+```bash
+npm run build
+```
+Preview the build locally:
+```bash
+npm run preview
+```
+
+### 5. Git commit
+```bash
+git add -A
+git commit -m "Your changes"
+git push origin main
