@@ -46,7 +46,6 @@ function Header() {
   const links = [
     { href: "#home", label: "Home" },
     { href: "#about", label: "About" },
-    { href: "#skills", label: "Skills" },
     { href: "#projects", label: "Projects" },
     { href: "#contact", label: "Contact" },
   ];
@@ -139,7 +138,7 @@ function Hero() {
             <p className="text-white/70">Hello, I’m</p>
             <h1 className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl md:text-5xl">
               Arron Snow
-              <span className="block text-white/60">Software Engineer</span>
+              <span className="block text-white/60">Software Engineering</span>
             </h1>
             <p className="max-w-xl text-white/60">
               I'm a Software Engineer with a passion for learning, building, and
@@ -154,7 +153,7 @@ function Hero() {
                 See Projects <ArrowRight className="h-4 w-4" />
               </a>
               <a
-                href="/resume.pdf"
+                href="/ArronSnow-resume.pdf"
                 target="_blank"
                 rel="noreferrer noopener"
                 className="inline-flex items-center gap-2 rounded-md border border-white/20 px-4 py-2 text-sm text-white hover:bg-white/10"
@@ -221,7 +220,7 @@ function Hero() {
 
         {/* Tech strip */}
         <div className="mt-14 grid grid-cols-2 gap-3 text-sm text-white/50 sm:grid-cols-3 md:grid-cols-6">
-          {["C#", "Python", "TypeScript", "React", "Node.js", "Git"].map((t) => (
+          {["C#", "Python", "Unity", "React", "TypeScript", "Git"].map((t) => (
             <div
               key={t}
               className="rounded-md border border-white/10 bg-white/5 px-3 py-2 text-center"
@@ -322,103 +321,96 @@ function About() {
   );
 }
 
-// Skills
-function Skills() {
-  const skills = [
-    { name: "C#", level: 90 },
-    { name: "Python", level: 88 },
-    { name: "Node.js", level: 84 },
-    { name: "Typescript", level: 80 },
-    { name: "SQL", level: 98 },
-  ];
-  return (
-    <Section id="skills" className="py-20">
-      <motion.div
-        variants={container}
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: true }}
-      >
-        <h2 className="mb-8 text-2xl font-bold tracking-tight text-white md:text-3xl">
-          Skills
-        </h2>
-        <div className="grid gap-4 md:grid-cols-2">
-          {skills.map((s) => (
-            <div
-              key={s.name}
-              className="space-y-2 rounded-lg border border-white/10 bg-white/5 p-4"
-            >
-              <div className="flex items-center justify-between text-white/80">
-                <span>{s.name}</span>
-                <span className="text-sm text-white/60">{s.level}%</span>
-              </div>
-              <div className="h-2 w-full rounded bg-white/10">
-                <div
-                  className="h-2 rounded bg-white/70"
-                  style={{ width: `${s.level}%` }}
-                />
-              </div>
-            </div>
-          ))}
-        </div>
-      </motion.div>
-    </Section>
-  );
-}
-
 // Projects
+// Projects (hover-expand strip)
 function Projects() {
-  const items = [
-    {
-      title: "Project One",
-      desc: "Coming Soon!",
-      tags: ["React", "Tailwind", "Storybook"],
-      link: "#",
-    },
-    {
-      title: "Project Two",
-      desc: "Coming Soon!",
-      tags: ["Node", "Postgres", "Kafka"],
-      link: "#",
-    },
-    {
-      title: "Project Three",
-      desc: "Coming Soon!",
-      tags: ["React Native", "GraphQL"],
-      link: "#",
-    },
+  type Project = { title: string; desc: string; image: string; href: string };
+  const projects: Project[] = [
+    { title: "Project 1", desc: "Design system & UI kit.", image: new URL("./assets/p1.jpg", import.meta.url).href, href: "#" },
+    { title: "Project 2", desc: "Telemetry pipeline with autoscaling.", image: new URL("./assets/p2.jpg", import.meta.url).href, href: "#" },
+    { title: "Project 3", desc: "City transit mobile app.", image: new URL("./assets/p3.jpg", import.meta.url).href, href: "#" },
+    { title: "Project 4", desc: "Realtime dashboard & alerts.", image: new URL("./assets/p4.jpg", import.meta.url).href, href: "#" },
   ];
+
+  const [active, setActive] = React.useState<number | null>(0); // default first item active
+
   return (
-    <Section id="projects" className="py-20">
-      <h2 className="mb-8 text-2xl font-bold tracking-tight text-white md:text-3xl">
-        Projects
-      </h2>
-      <div className="grid gap-6 md:grid-cols-3">
-        {items.map((p) => (
-          <div
-            key={p.title}
-            className="group flex flex-col rounded-xl border border-white/10 bg-white/5 p-4 text-white/80 transition hover:-translate-y-1 hover:bg-white/10"
-          >
-            <div className="mb-1 flex items-center justify-between text-lg font-semibold">
-              <span>{p.title}</span>
-              <ArrowRight className="h-4 w-4 opacity-0 transition group-hover:opacity-100" />
-            </div>
-            <p className="mb-3 text-sm text-white/60">{p.desc}</p>
-            <div className="flex flex-wrap gap-2">
-              {p.tags.map((t) => (
-                <span
-                  key={t}
-                  className="rounded-md border border-white/10 bg-white/10 px-2 py-1 text-xs text-white/70"
-                >
-                  {t}
-                </span>
-              ))}
-            </div>
-            <div className="pt-4">
-              <a
-                className="inline-block rounded-md border border-white/20 px-3 py-1 text-sm text-white hover:bg-white/10"
-                href={p.link}
+    <Section id="projects" className="pt-0 pb-0">
+      <h2 className="mb-8 text-2xl font-bold tracking-tight text-white md:text-3xl">Projects</h2>
+
+      {/* Desktop / Tablet: expanding strip */}
+      <div
+        className="hidden h-[440px] gap-4 md:flex"
+        onMouseLeave={() => setActive(0)}
+      >
+        {projects.map((p, i) => {
+          // Flex growth: hovered = big, others = small
+          const grow = active === null ? 1 : active === i ? 3 : 0.8;
+          const isActive = active === i;
+
+          return (
+            <motion.article
+              key={p.title}
+              onMouseEnter={() => setActive(i)}
+              className="basis-0 relative overflow-hidden rounded-2xl border border-white/10 bg-white/5"
+              style={{ flexGrow: grow, transition: "flex-grow 400ms ease" }}
+              initial={false}
+              animate={{ scale: isActive ? 1 : 0.98 }}
+              whileHover={{ scale: 1 }}
+            >
+              {/* image */}
+              <img
+                src={p.image}
+                alt={p.title}
+                className="absolute inset-0 h-full w-full object-cover"
+              />
+              {/* darken + subtle gradient */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/20 to-transparent" />
+
+              {/* collapsed label (vertical) */}
+              <motion.div
+                className="pointer-events-none absolute left-4 bottom-4 -rotate-90 origin-left text-xl font-semibold text-white/70"
+                animate={{ opacity: isActive ? 0 : 0.9, y: isActive ? 12 : 0 }}
+                transition={{ duration: 0.25 }}
               >
+                {p.title}
+              </motion.div>
+
+              {/* active details */}
+              <motion.div
+                className="absolute inset-0 flex flex-col justify-end p-6"
+                animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 8 }}
+                transition={{ duration: 0.25 }}
+              >
+                <h3 className="text-2xl font-semibold text-white">{p.title}</h3>
+                <p className="mt-1 max-w-md text-sm text-white/80">{p.desc}</p>
+                <a
+                  href={p.href}
+                  className="mt-3 inline-flex w-max items-center gap-2 rounded-md border border-white/20 bg-white/10 px-3 py-1.5 text-sm text-white hover:bg-white/20"
+                >
+                  View details
+                </a>
+              </motion.div>
+
+              {/* subtle inner ring */}
+              <div className="pointer-events-none absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/10" />
+            </motion.article>
+          );
+        })}
+      </div>
+
+      {/* Mobile: simple cards */}
+      <div className="md:hidden grid gap-4">
+        {projects.map((p) => (
+          <div key={p.title} className="overflow-hidden rounded-2xl border border-white/10 bg-white/5">
+            <div className="relative aspect-[16/10]">
+              <img src={p.image} alt={p.title} className="absolute inset-0 h-full w-full object-cover" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+            </div>
+            <div className="p-4">
+              <h3 className="text-lg font-semibold">{p.title}</h3>
+              <p className="mt-1 text-sm text-white/70">{p.desc}</p>
+              <a href={p.href} className="mt-3 inline-block rounded-md border border-white/20 px-3 py-1.5 text-sm text-white hover:bg-white/10">
                 View details
               </a>
             </div>
@@ -506,7 +498,6 @@ export default function App() {
       <Header />
       <Hero />
       <About />
-      <Skills />
       <Projects />
       <Contact />
       <Footer />
